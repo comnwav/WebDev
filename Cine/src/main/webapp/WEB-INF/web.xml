@@ -4,7 +4,7 @@
   
   <servlet>
 		<servlet-name>main</servlet-name>
-		<servlet-class>com.pro.web.CmController</servlet-class>
+		<servlet-class>com.pro.web.InfoController</servlet-class>
 		<init-param>
 			<param-name>charset</param-name>
 			<param-value>UTF-8</param-value>
@@ -18,10 +18,5 @@
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-    <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
 </web-app>

@@ -21,6 +21,7 @@ function infoPage() {
     fetchComment();
     makeNav(current_page);
     showComment(current_page);
+    getStarLike();
 }
 
 function fetchMovie() {
@@ -132,11 +133,6 @@ function makeNav(current_page) {
                 return Math.ceil(res.count / 5);
             }
 
-            let btn_prev = document.getElementById("btn_prev");
-            btn_prev.addEventListener('click', prevPage);
-            let btn_next = document.getElementById("btn_next");
-            btn_next.addEventListener('click', nextPage);
-
             function prevPage() {
                 if (current_page > 1) {
                     current_page--;
@@ -151,7 +147,13 @@ function makeNav(current_page) {
                 }
             }
 
+            let btn_prev = document.getElementById("btn_prev");
+            btn_prev.addEventListener('click', prevPage);
+            let btn_next = document.getElementById("btn_next");
+            btn_next.addEventListener('click', nextPage);
+
             function change(page) {
+
                 if (page < 1) page = 1;
                 if (page > totNumPages()) page = totNumPages();
                 showComment(page);
@@ -229,7 +231,7 @@ function delComment(val) {
         })
         .then(res => {
             showComment(current_page);
-            makePage()
+            makePage();
         })
 }
 
@@ -261,9 +263,39 @@ function fetchComment() {
                     element.checked = false;
                 })
                 showComment(current_page);
-                makePage()
+                makePage();
             })
     })
 }
+
+let likes = 0;
+let starAvg = 0;
+let indivLike = 0;
+
+function getStarLike() {
+
+    let url = `StarLikeGet.do`;
+
+    fetch(url, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `movieId=${movieId}&id=${sessionId}`
+        })
+        .then(res => res.json())
+        .then(res => {
+            let likes = document.createElement('a');
+            likes.innerHTML = res.likes
+        })
+}
+
+// function check() {
+//     let cp = document.createElement('h1');
+//     cp.innerHTML = `${current_page}`;
+
+//     let div = document.getElementById('check');
+//     div.append(cp);
+// }
 
 window.addEventListener('onLoad', infoPage());

@@ -35,4 +35,17 @@ public class InfoService {
 	public StarLikeVO getStarsAvg(StarLikeVO slv) {
 		return dao2.getStarsAvg(slv);
 	}
+	
+	public StarLikeVO getIndivLike(StarLikeVO slv) {
+		return dao2.getIndivLike(slv);
+	}
+	
+	public void like(StarLikeVO slv) {
+		dao2.like(slv);
+	}
+	
+	public void unLike(StarLikeVO slv) {
+		dao2.unLike(slv);
+	}
+	
 }

@@ -22,10 +22,13 @@ public class StarLikeGetControl implements Control {
 		
 		StarLikeVO slv = new StarLikeVO();
 		slv.setMovieId(Integer.parseInt(request.getParameter("movieId")));
+		slv.setId(request.getParameter("id"));
 		
 		InfoService service = new InfoService();
 		
 		slv.setStarsAvg(service.getStarsAvg(slv).getStarsAvg());
+		slv.setIndivLike(service.getIndivLike(slv).getIndivLike());
+		slv.setLikes(service.getLikes(slv).getLikes());
 		
 		PrintWriter out = response.getWriter();
 		
@@ -33,10 +36,10 @@ public class StarLikeGetControl implements Control {
 		
 		jo.put("likes", slv.getLikes());
 		jo.put("starsAvg", slv.getStarsAvg());
+		jo.put("indivLike", slv.getIndivLike());
 		
 		out.print(jo);
 		out.close();
 		
 	}
-
 }
