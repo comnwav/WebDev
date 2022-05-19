@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+    <h3>Ajax 호출 (Single Page Application)</h3>
+    // multipart 지정안하면 querystring 으로 날림
+    <form name="frm" action="memberInsertJson.do" method="post" enctype="multipart/form-data">
+        <label for="id">아이디</label>
+        <input type="text" name="id" id="id"><br>
+        <label for="pwd">비밀번호</label>
+        <input type="password" name="pwd" id="pwd"><br>
+        <label for="">이름</label>
+        <input type="text" name="name" id="name"><br>
+        <label for="email">메일</label>
+        <input type="email" name="email" id="email"><br>
+        <!-- <label for="profile">이미지</label>
+        <input type="file" name="profile" id="profile"><br> -->
+        <input type="submit" value="추가"><br>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>호갱이름</th>
+                <th>이메일</th>
+                <th>비밀번호</th>
+                <th>이미지</th>
+            </tr>
+        </thead>
+        <tbody id="list">
+        </tbody>
+    </table>
+
+    <script>
+        let fields = ['id', 'name', 'email', 'pwd', 'profile'];
+
+        function makeTr(member = {}) {
+            let tr = document.createElement('tr');
+            for (let field of fields) {
+                let td = document.createElement('td');
+                td.innerHTML = member[field] ? member[field] : '';
+                tr.append(td);
+            }
+
+            return tr;
+        }
+
+        function init() {
+            // 서버에서 회원리스트 => 화면출력
+            let ajax = new XMLHttpRequest();
+
+            fetch('memberListJson.do')
+                // .then(result => {
+                //     return result.json();
+                // })
+                .then(result => result.json()) // return 을 포함함
+                .then(result => {
+                    let tlist = document.getElementById('list');
+                    result.forEach(element => {
+                        tlist.append(makeTr(element));
+                    });
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            let frm = document.forms.frm;
+            frm.addEventListener('submit', e => {
+                e.preventDefault();
+
+                let formData = new FormData(frm); // form 태그요소 multipart 요청으로 처리
+
+                for (let keyVal of formData.entries()) {
+                    console.log(`${keyVal[0],keyVal[1]}`);
+                }
+
+                // url,  요청방식 {}
+                fetch(frm.action, {
+                        method: 'post',
+                        headers: {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formDataToEncoding(formData)
+                    })
+                    // .then(data => data.text()) // object 로 받아옴
+                    .then(data => data.json())
+                    .then(result => {
+                        document.getElementById('list').appendChild(makeTr(result));
+                    })
+                    .catch(error => console.log(error));
+
+
+            })
+        }
+        init();
+
+        function formDataToEncoding(data = []) {
+
+            let ary = [];
+
+            for (let element of data.entries()) {
+                ary.push(element[0] + '=' + element[1]);
+            }
+
+            return ary.join('&');
+        }
+    </script>
+</body>
+
+</html>

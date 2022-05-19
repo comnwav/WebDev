@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ajax/openAPI.html</title>
+</head>
+
+<body>
+    <input type="text" id="sido"><button id="findBtn">찾기</button>
+
+    <div id="show">
+        <table border="1">
+            <thead id="thead"></thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        console.log('1. start');
+
+        let fields = ['id', 'sido', 'address', 'phoneNumber', 'zipCode'];
+
+        let obj = {
+            name: 'Hong',
+            age: 20,
+            showInfo: () => {
+                return this.name + ', ' + this.age;
+            }
+        }
+
+        function globalFnc() {
+            console.log(this); // function 안에서 this는 js 최상위 객체인 window 객체를 가르킨다
+        }
+        globalFnc();
+
+        // this ex1
+        // let obj2 = {
+        //     name: 'Hong',
+        //     age: 20,
+        //     showInfo: function () {
+        //         return myName();
+        //     }
+        // }
+
+        // function myName() {
+        //     console.log(this);
+        //     console.log("here!!!");
+        //     return this.name;
+        // }
+
+        // this ex2
+        // let obj = {
+        //     name: 'Hong',
+        //     age: 20,
+        //     showInfo: function () {
+        //         this.myName1 = myName
+        //         return this.myName1();
+        //     }
+        // }
+
+        // function myName() {
+        //     console.log(this);
+        //     console.log("here!!!");
+        //     return this.name;
+        // }
+
+        function init() {
+            let url =
+                `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=vFxcIPCY07Q9G5n6eOWA8BU0FcKS%2FtOMFY8h9RmjA%2FtKJCjGNXaq6f4LRwrX1MGfQ%2BWy8Zko4n0j9yy9%2BleE7g%3D%3D`;
+            let result = '';
+            xhtp = new XMLHttpRequest();
+            xhtp.open('get', url);
+            xhtp.send();
+            xhtp.onload = loadCallback; // callback
+
+            console.log('3. end');
+
+            // find button
+            let findBtn = document.getElementById('findBtn');
+            findBtn.addEventListener('click', findCallback);
+
+            // findBtn.addEventListener('click', () => {
+            //     console.log(this);
+            // });
+        }
+
+        init(); // 실행
+
+        // find callback
+        function findCallback() {
+            // 기능구현. input.value 속성을 읽어와서 filterAry => 헤더, 바디.
+            let searchSido = document.getElementById("sido").value;
+
+            let filterAry = result.data.filter(Element => {
+                // return Element.sido == searchSido;
+                // return Element.sido.startWith(searchSido); // startWith
+                return Element.sido.indexOf(searchSido) != -1; // 포함
+            });
+
+            makeBody(filterAry);
+
+            // 입력값을 지우기
+            document.getElementById('sido').value = "";
+        };
+
+        // callback
+        function loadCallback() {
+            // console.clear();
+
+            // result.data.forEach(Element => {
+            //     if (Element.sido == '서울특별시')
+            //         console.log(`id:${Element.id}, center: ${Element.centerName}`);
+            // });
+
+            result = JSON.parse(this.responseText);
+
+            console.log(result);
+
+            let filterAry = result.data.filter(Element => {
+                return Element.sido == '대구광역시';
+            });
+
+            console.log(filterAry);
+
+            makeHead();
+            makeBody(filterAry);
+        }
+
+        function makeHead() {
+            // // head
+            let head = document.getElementById('thead');
+
+            let tr = document.createElement('tr');
+            head.appendChild(tr);
+            fields.forEach(Element => {
+                let td = document.createElement('th');
+                td.innerHTML = Element.toUpperCase();
+                tr.appendChild(td);
+            });
+
+        }
+
+        function makeBody(ary) {
+
+            // body            
+            let body = document.getElementById('tbody');
+
+            // 이미 생성된 조회정보 삭제
+            let childTr = document.querySelectorAll('#tbody>tr');
+            childTr.forEach(Element => {
+                body.removeChild(Element);
+            });
+
+            console.log(ary);
+
+            ary.forEach(center => {
+                let tr = document.createElement('tr');
+                body.appendChild(tr);
+
+                console.log(center.facilityName);
+
+                fields.forEach(Element => {
+                    let td = document.createElement('td');
+                    // address 필드일 경우에는 링크
+                    if (Element == 'address') {
+                        let aTag = document.createElement('a');
+                        aTag.setAttribute('href', `daumApi.html?x=${center.lat}&y=${center.lng}&f=${center.facilityName}`);
+                        aTag.setAttribute('target', '_blank');
+                        aTag.innerHTML = center[Element];
+                        td.appendChild(aTag);
+                    } else {
+                        td.innerHTML = center[Element];
+                    }
+                    tr.appendChild(td);
+                });
+            });
+        }
+    </script>
+
+</body>
+
+</html>

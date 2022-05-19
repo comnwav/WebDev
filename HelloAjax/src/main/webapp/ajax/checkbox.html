@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ajax/checkbox.html</title>
+</head>
+
+<body>
+    <button id="check">선택삭제</button>
+    <button id="allCheck">전체선택</button>
+    <table border="1">
+        <tr>
+            <td><input type='checkbox'></td>
+            <td>Hongkildong1</td>
+        </tr>
+        <tr>
+            <td><input type='checkbox'></td>
+            <td>Hongkildong2</td>
+        </tr>
+        <tr>
+            <td><input type='checkbox'></td>
+            <td>Hongkildong3</td>
+        </tr>
+    </table>
+
+    <script>
+        let btn = document.querySelector('#check');
+        btn.addEventListener('click', () => {
+            let allTr = document.querySelectorAll('tr');
+            console.log(allTr);
+            allTr.forEach(tr => {
+                if (tr.firstElementChild.firstElementChild.checked == true) {
+                    tr.remove();
+                }
+            })
+        });
+
+        let btnAll = document.querySelector('#allCheck');
+        btnAll.addEventListener('click', () => {
+            let allTr = document.querySelectorAll('tr');
+            // console.log(allTr);
+            allTr.forEach(tr => {
+                tr.firstElementChild.firstElementChild.checked = true;
+            })
+        });
+
+    </script>
+</body>
+
+</html>

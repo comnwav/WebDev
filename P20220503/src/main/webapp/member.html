@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>member.html</title>
+</head>
+
+<body>
+    <form action="queryTest" method="post">
+        <label for="id">ID</label>
+        <input type='text' name='id' id="id"><br>
+        <label for="pass">Pass</label>
+        <input type='text' name='pass' id="pass"><br>
+        <label for="name">Name</label>
+        <input type='text' name='name' id="name"><br>
+
+        <input type='checkbox' name='hobby' value='climbing' id="climbing">
+        <label for="climbing">등산</label>
+        <input type='checkbox' name='hobby' value='sports' id="sports">
+        <label for="sports">운동</label>
+        <input type='checkbox' name='hobby' value='reading' id="reading">
+        <label for="reading">독서</label>
+        <input type='checkbox' name='hobby' value='traveling' id="traveling">
+        <label for="traveling">여행</label><br>
+
+        <label>성별</label>
+        <input type="radio" name="gender" id="male" value="male">
+        <label for="male">남자</label>
+        <input type="radio" name="gender" id="female" value="female">
+        <label for="female">여자</label><br>
+
+        <label>종교</label>
+        <select name="religion">
+            <option value="christian">기독교</option>
+            <option value="buddhism">불교</option>
+            <option value="catholic">천주교</option>
+            <option value="atheism">무신론</option>
+        </select><br>
+
+        <label for="intro">자기소개</label><br>
+        <textarea id="intro" name="intro" id="" cols="30" rows="10" autofocus></textarea>
+        <br>
+        <input type="submit" value="전송">
+        <input type="reset" value="초기화">
+
+    </form>
+</body>
+
+</html>
