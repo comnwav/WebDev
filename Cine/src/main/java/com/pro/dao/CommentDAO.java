@@ -78,18 +78,34 @@ public class CommentDAO extends DAO {
 
 		List<MemberVO> list = new ArrayList<MemberVO>();
 
-		String sql = "SELECT\n" + "    *\n" + "FROM\n" + "    (\n" + "        SELECT\n" + "            a.*,\n"
-				+ "            ROWNUM rn\n" + "        FROM\n" + "            (\n" + "                SELECT\n"
-				+ "                    *\n" + "                FROM\n" + "                    info_cmt\n"
-				+ "                ORDER BY\n" + "                    cm_date DESC\n" + "            ) a\n"
-				+ "        WHERE\n" + "            ROWNUM <= ?*5\n" + "    )\n" + "WHERE\n"
-				+ "    rn > (?-1)*5 and movie_id = ?";
+		String sql = "SELECT\n"+
+				"    *\n"+
+				"FROM\n"+
+				"    (\n"+
+				"        SELECT\n"+
+				"            a.*,\n"+
+				"            ROWNUM rn\n"+
+				"        FROM\n"+
+				"            (\n"+
+				"                SELECT\n"+
+				"                    *\n"+
+				"                FROM\n"+
+				"                    info_cmt\n"+
+				"                ORDER BY\n"+
+				"                    cm_date DESC\n"+
+				"            ) a\n"+
+				"        WHERE\n"+
+				"            ROWNUM <= ?*5 and movie_id = ?\n"+
+				"    )\n"+
+				"WHERE\n"+
+				"    rn > (?-1)*5 and movie_id = ?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, pv.getPage());
-			psmt.setInt(2, pv.getPage());
-			psmt.setInt(3, pv.getMovieId());
+			psmt.setInt(2, pv.getMovieId());
+			psmt.setInt(3, pv.getPage());
+			psmt.setInt(4, pv.getMovieId());
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				MemberVO vo = new MemberVO();

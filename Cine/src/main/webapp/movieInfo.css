@@ -1,25 +1,60 @@
-.f1 {
-    float: left;
+* {
+    border-style: solid;
+    border: 1px;
 }
 
-.f2 {
-    float: left;
+/* main */
+.container {
+    box-sizing: border-box;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 450px 300px;
+    gap: 10px 10px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "poster overview overview"
+        "info comment comment";
 }
 
-.f3 {
-    display: inline-block
+.poster {
+
+    grid-area: poster;
+    border-style: dashed;
 }
 
-#area {
-    float: left;
+#posterImg {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
 }
 
-.star-rating {
-    float: left;
+.info {
+    grid-area: info;
+    border-style: dashed;
 }
 
-.bt {
-    float: left;
+.overview {
+    grid-area: overview;
+    border-style: dashed;
+}
+
+.comment {
+    grid-area: comment;
+    border-style: dashed;
+}
+
+#cmtTableCont {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
+    height: 250px;
+}
+
+#cmtTableCont {
+    height: 150px;
 }
 
 /* star */
