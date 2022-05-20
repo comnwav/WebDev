@@ -9,9 +9,9 @@ import com.pro.vo.MemberVO;
 import com.pro.vo.PageVO;
 
 public class CommentDAO extends DAO {
-	
+
 	public int getRownum(int movieId) {
-		
+
 		conn = getConnect();
 
 		String sql = "select count(*) from info_cmt where movie_id = ?";
@@ -21,7 +21,7 @@ public class CommentDAO extends DAO {
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, movieId);
-			rs = psmt.executeQuery(); 
+			rs = psmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt("count(*)");
 			}
@@ -83,7 +83,7 @@ public class CommentDAO extends DAO {
 				+ "                    *\n" + "                FROM\n" + "                    info_cmt\n"
 				+ "                ORDER BY\n" + "                    cm_date DESC\n" + "            ) a\n"
 				+ "        WHERE\n" + "            ROWNUM <= ?*5\n" + "    )\n" + "WHERE\n"
-				+ "    rn >= (?-1)*5 and movie_id = ?";
+				+ "    rn > (?-1)*5 and movie_id = ?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -108,5 +108,5 @@ public class CommentDAO extends DAO {
 		}
 		return list;
 	}
-	
+
 }

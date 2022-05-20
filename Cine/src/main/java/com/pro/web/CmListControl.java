@@ -47,9 +47,6 @@ public class CmListControl implements Control {
 			
 			ary.put(jo);
 		}
-		
-		System.out.println(ary);
-
 		out.print(ary);
 		out.close();
 	}

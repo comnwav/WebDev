@@ -9,6 +9,7 @@ import com.pro.vo.PageVO;
 import com.pro.vo.StarLikeVO;
 
 public class InfoService {
+	
 	CommentDAO dao = new CommentDAO(); // db CRUD
 	StarLikeDAO dao2 = new StarLikeDAO();
 	
@@ -28,16 +29,16 @@ public class InfoService {
 		return dao.getRownum(movieId);
 	}
 	
-	public StarLikeVO getLikes(StarLikeVO slv) {
-		return dao2.getLikes(slv);
+	public void getLikes(StarLikeVO slv) {
+		dao2.getLikes(slv);
 	}
 	
-	public StarLikeVO getStarsAvg(StarLikeVO slv) {
-		return dao2.getStarsAvg(slv);
+	public void getRating(StarLikeVO slv) {
+		dao2.getRating(slv);
 	}
 	
-	public StarLikeVO getIndivLike(StarLikeVO slv) {
-		return dao2.getIndivLike(slv);
+	public void getIndivLike(StarLikeVO slv) {
+		dao2.getIndivLike(slv);
 	}
 	
 	public void like(StarLikeVO slv) {
@@ -47,5 +48,4 @@ public class InfoService {
 	public void unLike(StarLikeVO slv) {
 		dao2.unLike(slv);
 	}
-	
 }
