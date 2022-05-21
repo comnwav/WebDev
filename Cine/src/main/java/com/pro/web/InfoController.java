@@ -40,6 +40,9 @@ public class InfoController extends HttpServlet {
 		list.put("/getRating.do", new RatingGetControl());
 		list.put("/clickLike.do", new LikeControl());
 		
+		// payment
+		list.put("/payment.do", new PayControl());
+		
 	}
 
 	@Override

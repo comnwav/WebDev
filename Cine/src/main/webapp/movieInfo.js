@@ -17,7 +17,7 @@ function getMovie() {
     fetch(url)
         .then(res => res.json())
         .then(res => {
-            console.log(res);
+            getTrailer(res.imdb_id);
 
             let base_url = "https://image.tmdb.org/t/p/w500";
             let poster = base_url + res.poster_path;
@@ -42,6 +42,35 @@ function getMovie() {
             relDateDiv.appendChild(h3);
         })
 };
+
+// get credits
+function getCredits(id) {
+    let url = `https://imdb-api.com/en/API/FullCast/k_wfatj861/${id}`;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(res => {
+        })
+}
+
+// get trailer
+let trailerDiv = document.querySelector('.trailer');
+
+function getTrailer(id) {
+    let url = `https://imdb-api.com/en/API/YouTubeTrailer/k_wfatj861/${id}`
+
+    fetch(url)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            let vid = document.createElement('iframe');
+            vid.width = 300;
+            vid.height = 300;
+            let key = res.videoId;
+            vid.src = `https://www.youtube.com/embed/${key}?autoplay=0`;
+            trailerDiv.appendChild(vid);
+        })
+}
 
 // pagination session
 let current_page = 1;
@@ -169,8 +198,10 @@ function delComment(val) {
         body: `code=${val}`
     })
         .then(res => {
-            showComment(1);
             makePage();
+            showComment(1);
+            ratingDiv.innerHTML = "";
+            getRating();
         })
 }
 
@@ -203,6 +234,8 @@ function addComment() {
                 })
                 makePage();
                 showComment(1);
+                ratingDiv.innerHTML = "";
+                getRating();
             })
     })
 }
@@ -223,7 +256,7 @@ function getRating() {
         .then(res => res.json())
         .then(res => {
             let a = document.createElement('a');
-            a.innerHTML = `평점 ${res.rating}`;
+            a.innerHTML = `${res.rating}`;
             ratingDiv.appendChild(a);
         })
 }
@@ -232,9 +265,9 @@ function getRating() {
 // get a number of likes
 let indivLike = 0;
 let likesDiv = document.getElementById('likesDiv');
-let likeBtn = document.getElementById('likeBtn');
-likeBtn.addEventListener('click', e => {
-    likeBtn.innerHTML = "";
+let likeCount = document.getElementById('likeCount');
+likesDiv.addEventListener('click', e => {
+    likeCount.innerHTML = "";
     clickLike();
     getIndivLike();
     getLikes();
@@ -282,13 +315,14 @@ function getLikes() {
     })
         .then(res => res.json())
         .then(res => {
-            likeBtn.innerHTML += `${res.likes}`;
+            likeCount.innerHTML = `${res.likes}`;
         })
 }
 
 function infoPage() {
     getMovie();
-    makePage()
+    getCredits();
+    makePage();
     addComment();
     showComment(current_page);
     getIndivLike();

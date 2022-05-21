@@ -1,6 +1,119 @@
 * {
-    border-style: solid;
-    border: 1px;
+    box-sizing: border-box;
+    font-family: '맑은 고딕';
+    color: white;
+}
+
+body {
+    background-color: black;
+}
+
+#cmtSubmit * {
+    float: left;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+}
+
+.star-rating {
+    padding-right: 20px;
+}
+
+#pageNav {
+    margin: 0 auto;
+}
+
+#pageNav * {
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+}
+
+#btnSet * {
+    float: left;
+}
+
+#btn_prev,
+#btn_next,
+#addBtn {
+    border-style: none;
+    border-radius: 5px;
+    width: 50px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#overview {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    overflow: auto;
+    border-radius: 10px;
+    padding: 15px;
+    padding-top: 0px;
+    height: 180px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#overview::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera*/
+}
+
+#area {
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.5);
+    place-content: white;
+}
+
+#reserveBtn {
+    margin-top: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    background-color: rgb(240, 255, 23);
+}
+
+#likesDiv {
+    margin-right: 10px;
+    margin-top: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    background-color: rgb(255, 53, 114);
+}
+
+#likeDiv * {
+    color: black;
+}
+
+#ratingDivParent {
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+    width: 200px;
+    height: 30px;
+    background-color: #fc0;
+}
+
+#ratingDivParent * {
+    color: black;
+    display: inline;
 }
 
 /* main */
@@ -14,13 +127,24 @@
     grid-auto-flow: row;
     grid-template-areas:
         "poster overview overview"
-        "info comment comment";
+        "trailer comment comment"
+}
+
+.rel {
+    grid-area: rel;
+    padding: 5%;
+    background-color: rgba(255, 255, 255, 0.2);
+
+}
+
+.trailer {
+    background-color: rgba(255, 255, 255, 0.2);
+    grid-area: trailer;
 }
 
 .poster {
-
     grid-area: poster;
-    border-style: dashed;
+
 }
 
 #posterImg {
@@ -32,17 +156,21 @@
 
 .info {
     grid-area: info;
-    border-style: dashed;
+    padding: 5%;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .overview {
+    padding: 5%;
+    padding-top: 0%;
     grid-area: overview;
-    border-style: dashed;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .comment {
+    padding: 5%;
     grid-area: comment;
-    border-style: dashed;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 #cmtTableCont {
