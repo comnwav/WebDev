@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<link rel="stylesheet" href="movieSearch.css">
+
+<body>
+    <div id="mainContainer">
+        <!-- <div class="container">
+            <div class="poster"></div>
+            <div class="title"></div>
+            <div class="release"></div>
+            <div class="rating">
+                <div id="ratingDiv">
+                    NEGABOX 평점
+                    <div id="rating"></div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <script>
+
+        let srcPara = new URL(location.href).searchParams;
+        let keyword = srcPara.get('keyword');
+        let key = "6446bae76aaffa9af6d4c00b2299f016";
+
+        let mainContainer = document.getElementById('mainContainer');
+
+        function searchMovie() {
+            let url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=kr-KR&query=${keyword}&page=1&include_adult=false`
+
+            fetch(url)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+
+                    let ary = res.results;
+                    ary.forEach(Element => {
+                        console.log(Element);
+
+                        let posterDiv = document.createElement('div');
+                        posterDiv.className = "poster";
+
+                        let titleDiv = document.createElement('div');
+                        titleDiv.className = "title";
+
+                        let relDateDiv = document.createElement('div');
+                        relDateDiv.className = "release";
+
+                        let container = document.createElement('div');
+                        container.className = "container";
+                        container.style.cursor = "pointer";
+
+                        let base_url = "https://image.tmdb.org/t/p/w500";
+                        let poster = base_url + Element.poster_path;
+                        let img = document.createElement('img');
+                        img.setAttribute("id", "posterImg");
+                        img.setAttribute("height", "200px")
+                        img.src = poster;
+                        posterDiv.appendChild(img);
+                        container.appendChild(posterDiv);
+
+                        let title = Element.title;
+                        let h1 = document.createElement('h1');
+                        h1.innerHTML = title;
+                        titleDiv.appendChild(h1);
+                        container.appendChild(titleDiv);
+
+                        let relDate = Element.release_date;
+                        let h3 = document.createElement('h3');
+                        h3.innerHTML = relDate;
+                        relDateDiv.appendChild(h3);
+                        container.appendChild(relDateDiv);
+
+                        getRating(Element.id);
+
+                        container.addEventListener('click', e => {
+                            let url = `movieInfo.html?movieId=${Element.id}`;
+                            window.open(url);
+                        })
+
+                        mainContainer.appendChild(container);
+                    });
+
+                })
+        }
+
+        // rating section
+
+        function getRating(id) {
+            let url = `getRating.do`;
+
+            fetch(url, {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `movieId=${id}`
+            })
+                .then(res => res.json())
+                .then(res => {
+                    let ratingDiv = document.createElement('div');
+                    let a = document.createElement('a');
+                    a.innerHTML = `${res.rating}`;
+                    ratingDiv.appendChild(a);
+                    container.appendChild(ratingDiv);
+                })
+        }
+
+        searchMovie();
+    </script>
+</body>
+
+</html>

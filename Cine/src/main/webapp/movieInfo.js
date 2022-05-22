@@ -24,6 +24,7 @@ function getMovie() {
             let img = document.createElement('img');
             img.setAttribute("id", "posterImg");
             img.src = poster;
+            console.log(img);
             posterDiv.appendChild(img);
 
             let title = res.original_title;
