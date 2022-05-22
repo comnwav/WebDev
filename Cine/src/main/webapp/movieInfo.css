@@ -8,6 +8,10 @@ body {
     background-color: black;
 }
 
+#cmtSubmit {
+    margin-left: 60px;
+}
+
 #cmtSubmit * {
     float: left;
     text-align: center;
@@ -20,7 +24,7 @@ body {
 }
 
 #pageNav {
-    margin: 0 auto;
+    margin-left: 200px;
 }
 
 #pageNav * {
@@ -31,6 +35,10 @@ body {
 
 #btnSet * {
     float: left;
+}
+
+#cmtTable {
+    overflow: hidden;
 }
 
 #btn_prev,
